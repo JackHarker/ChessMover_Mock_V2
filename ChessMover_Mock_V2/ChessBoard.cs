@@ -17,18 +17,22 @@ namespace ChessMover_Mock
 
         Tile targetPiece;
 
-        Tile[] obstacles = new Tile[20];
+        Tile[] obstacles = new Tile[1];
 
         List<Tile> possiblePlayerMoves = new List<Tile>();
         public ChessBoard()
         {
-            playerPiece= new Rook(luckyBox.Next(chessBoardArray.GetLength(0)), 
-                luckyBox.Next(chessBoardArray.GetLength(1)));
+            playerPiece = new Rook(luckyBox.Next(chessBoardArray.GetLength(0)),
+              luckyBox.Next(chessBoardArray.GetLength(1)));
 
-            targetPiece = new Tile(luckyBox.Next(chessBoardArray.GetLength(0)), 
+            targetPiece = new Tile(luckyBox.Next(chessBoardArray.GetLength(0)),
                 luckyBox.Next(chessBoardArray.GetLength(1)), 'T');
 
-            for (int i = 0; i < obstacles.Length; i++) 
+            //playerPiece= new Rook(1, 1);
+
+            //targetPiece = new Tile(10, 1, 'T');
+
+            for (int i = 0; i < obstacles.Length; i++)
             {
                 obstacles[i] = new Tile(luckyBox.Next(chessBoardArray.GetLength(0)),
                 luckyBox.Next(chessBoardArray.GetLength(1)), (char)9689);
@@ -37,11 +41,11 @@ namespace ChessMover_Mock
             UpdateBoard();
             CheckMoves();
             ShortestRoute();
-            
+
         }
         public void UpdateBoard()
         {
-            
+
             bool blackSquare = true;
 
             for (int i = 0; i < chessBoardArray.GetLength(1); i++)
@@ -73,15 +77,63 @@ namespace ChessMover_Mock
                 chessBoardArray[obstacles[i].GetCol(), obstacles[i].GetRow()] = obstacles[i];
             }
 
-            
+
         }
         public void ShortestRoute()
         {
+            bool routeFound = false;
             //Create your algorithm here!
+
+            for (int i = 0; i < possiblePlayerMoves.Count; i++)
+            {
+                Console.SetCursorPosition(0, 20);
+
+                if (possiblePlayerMoves[i].GetCol() == targetPiece.GetCol()
+                    && possiblePlayerMoves[i].GetRow() == targetPiece.GetRow())
+                {
+
+                    Console.WriteLine("I have a straight route");
+                    routeFound = true;
+                }
+                else
+                {
+
+                    Console.WriteLine();
+                }
+
+
+            }
+            if (routeFound == false)
+            {
+                for (int i = 0; i < possiblePlayerMoves.Count; i++)
+                {
+                    Console.SetCursorPosition(0, 20);
+
+                    Console.WriteLine("                     ");
+
+                    if (possiblePlayerMoves[i].GetRow() == targetPiece.GetRow())
+                    {
+
+
+                        Console.WriteLine(("col = " + (possiblePlayerMoves[i].GetCol()+1)) + " row = " + (possiblePlayerMoves[i].GetRow() + 1));
+
+                        
+                    }
+                    else
+                    {
+                        
+                    }
+
+
+                }
+            }
+
+
+
         }
         public void CheckMoves()
         {
-           
+
             if (playerPiece.GetDisplayChar() == 'R')
             {
                 CheckRookMoves();
@@ -90,11 +142,11 @@ namespace ChessMover_Mock
             {
                 CheckBishopMoves();
             }
-            
+
         }
         private void CheckRookMoves()
         {
-            for (int i = playerPiece.GetCol()+1; i < chessBoardArray.GetLength(0); i++)
+            for (int i = playerPiece.GetCol() + 1; i < chessBoardArray.GetLength(0); i++)
             {
                 if (chessBoardArray[i, playerPiece.GetRow()].GetDisplayChar() == (char)9689)
                 {
@@ -104,9 +156,9 @@ namespace ChessMover_Mock
                 {
                     possiblePlayerMoves.Add(new Tile(i, playerPiece.GetRow(), (char)9632));
                 }
-              
+
             }
-            for (int i = playerPiece.GetCol() -1; i >= 0; i--)
+            for (int i = playerPiece.GetCol() - 1; i >= 0; i--)
             {
                 if (chessBoardArray[i, playerPiece.GetRow()].GetDisplayChar() == (char)9689)
                 {
@@ -142,7 +194,7 @@ namespace ChessMover_Mock
         }
         private void CheckBishopMoves()
         {
-            for (int i = playerPiece.GetCol()+1, j = playerPiece.GetRow()+1; i <chessBoardArray.GetLength(0) && j < chessBoardArray.GetLength(1); i++, j++)
+            for (int i = playerPiece.GetCol() + 1, j = playerPiece.GetRow() + 1; i < chessBoardArray.GetLength(0) && j < chessBoardArray.GetLength(1); i++, j++)
             {
                 if (chessBoardArray[i, j].GetDisplayChar() == (char)9689)
                 {
@@ -153,7 +205,7 @@ namespace ChessMover_Mock
                     possiblePlayerMoves.Add(new Tile(i, j, (char)9632));
                 }
             }
-            for (int i = playerPiece.GetCol() -1, j = playerPiece.GetRow() + 1; i >=0 && j < chessBoardArray.GetLength(1); i--, j++)
+            for (int i = playerPiece.GetCol() - 1, j = playerPiece.GetRow() + 1; i >= 0 && j < chessBoardArray.GetLength(1); i--, j++)
             {
                 if (chessBoardArray[i, j].GetDisplayChar() == (char)9689)
                 {
@@ -164,7 +216,7 @@ namespace ChessMover_Mock
                     possiblePlayerMoves.Add(new Tile(i, j, (char)9632));
                 }
             }
-            for (int i = playerPiece.GetCol() + 1, j = playerPiece.GetRow() -1; i < chessBoardArray.GetLength(0) && j >=0; i++, j--)
+            for (int i = playerPiece.GetCol() + 1, j = playerPiece.GetRow() - 1; i < chessBoardArray.GetLength(0) && j >= 0; i++, j--)
             {
                 if (chessBoardArray[i, j].GetDisplayChar() == (char)9689)
                 {
@@ -196,6 +248,6 @@ namespace ChessMover_Mock
         {
             return possiblePlayerMoves;
         }
-        
+
     }
 }

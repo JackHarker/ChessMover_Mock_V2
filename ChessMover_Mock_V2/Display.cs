@@ -64,6 +64,30 @@ namespace ChessMover_Mock
                 //Console.WriteLine(possiblePlayerMoves.Count);
 
             }
+
+            for (int i = 0; i < chessBoardArray.GetLength(1); i++)
+            {
+                for (int j = 0; j < chessBoardArray.GetLength(0); j++)
+                {
+                    
+                    if (chessBoardArray[i, j].GetDisplayChar() == 'T')
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.SetCursorPosition(i * 2, j);
+                        Console.WriteLine(chessBoardArray[i, j].GetDisplayChar());
+                        Console.ResetColor();
+                    }
+
+                    
+
+
+                    
+
+
+                }
+
+            }
+            Console.SetCursorPosition(0, 20);
         }
 
     }
